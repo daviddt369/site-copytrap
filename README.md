@@ -31,7 +31,9 @@
 
 ## Быстрое подключение
 
-Готовый шаблон лежит в [examples/head-snippet.html](./examples/head-snippet.html).
+Готовый пример лежит в [examples/head-snippet.html](./examples/head-snippet.html).
+
+Универсальный шаблон с плейсхолдерами лежит в [examples/head-snippet.template.html](./examples/head-snippet.template.html).
 
 Меняешь только:
 
@@ -102,7 +104,7 @@ Inline-блок:
 
 ## Чеклист для нового сайта
 
-1. Открыть [examples/head-snippet.html](./examples/head-snippet.html)
+1. Открыть [examples/head-snippet.template.html](./examples/head-snippet.template.html) или [examples/head-snippet.html](./examples/head-snippet.html)
 2. Заменить домен, URL оригинала и контакты
 3. Вставить блок в `<head>`
 4. Убедиться, что он стоит выше GTM / Pixel / `gtag` / `ym`
@@ -132,6 +134,15 @@ Inline-блок:
 Нужны canonical, og:url, inline bootstrap и внешний copytrap.js.
 Ставь всё в <head> до аналитики.
 Заполни allowed hosts, original URL, имя автора и ссылку WhatsApp.
+```
+
+Если хочешь именно шаблонный режим с подстановкой значений, можно говорить так:
+
+```text
+Возьми examples/head-snippet.template.html из репы https://github.com/daviddt369/site-copytrap
+и подставь значения в {{DOMAIN}}, {{AUTHOR_NAME}}, {{AUTHOR_PITCH}}, {{AUTHOR_LINK}},
+{{AUTHOR_LINK_TEXT}} и {{REDIRECT_DELAY}}.
+Потом вставь результат в <head> до аналитики.
 ```
 
 ## Рекомендуемый источник скрипта
