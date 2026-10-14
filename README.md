@@ -43,11 +43,27 @@
 
 Потом вставляешь весь блок в `<head>`.
 
+## Превью ссылок (WhatsApp / Telegram / VK)
+
+Сборщики превью не выполняют JS и часто читают только начало `<head>` простым парсером. Если inline-блок стоит выше `og:*`, а в его JS-строке лежат «живые» `<title>` / `<meta>`, в превью попадает код защиты вместо описания сайта. Правила:
+
+1. `<title>`, `description`, `canonical`, все `og:*`, `twitter:*` и фавиконки — **выше** обоих скриптов защиты.
+2. В inline-блоке все `<` внутри JS-строк записаны как `\x3c` (в примерах уже так). Браузер получает тот же HTML, а парсер не видит лишнего `<title>`.
+3. `og:image` — абсолютный URL на своём домене (не `github.io`, если Pages не включён), лучше 1200×630 JPG.
+4. Фавиконка — файлы `favicon.ico` + PNG (`apple-touch-icon.png` 180×180). SVG data-URI мессенджеры не понимают.
+
 ## Минимальный порядок подключения
 
 ```html
+<title>...</title>
+<meta name="description" content="...">
 <link rel="canonical" href="https://site.ru/">
 <meta property="og:url" content="https://site.ru/">
+<meta property="og:title" content="...">
+<meta property="og:description" content="...">
+<meta property="og:image" content="https://site.ru/og-image.jpg">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <!-- 1. Inline fallback -->
 ...inline bootstrap...
@@ -106,10 +122,11 @@ Inline-блок:
 
 1. Открыть [examples/head-snippet.template.html](./examples/head-snippet.template.html) или [examples/head-snippet.html](./examples/head-snippet.html)
 2. Заменить домен, URL оригинала и контакты
-3. Вставить блок в `<head>`
+3. Вставить блок в `<head>` — после `title` / `description` / `og:*` / `twitter:*` / фавиконок
 4. Убедиться, что он стоит выше GTM / Pixel / `gtag` / `ym`
 5. Задеплоить
 6. Проверить копию на левом домене
+7. Отправить ссылку себе в WhatsApp/Telegram — в превью должны быть заголовок, описание и картинка, а не код
 
 ## Чеклист проверки
 
@@ -132,7 +149,8 @@ Inline-блок:
 ```text
 Встрой защиту по инструкции из README и examples/head-snippet.html.
 Нужны canonical, og:url, inline bootstrap и внешний copytrap.js.
-Ставь всё в <head> до аналитики.
+Ставь всё в <head> до аналитики, но ПОСЛЕ title, description, og:*, twitter:* и фавиконок.
+В inline-блоке все '<' внутри JS-строк — как \x3c (см. раздел «Превью ссылок»).
 Заполни allowed hosts, original URL, имя автора и ссылку WhatsApp.
 ```
 
